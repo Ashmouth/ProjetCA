@@ -194,8 +194,8 @@ void Function::comput_basic_block() {
         debut = current;
         ind++;
       }
-                }
-                if(current->isInst()) {
+    }
+    if(current->isInst()) {
       if (debut == NULL) {
         debut = current;
       } else {
@@ -313,6 +313,20 @@ void Function::comput_succ_pred_BB() {
   return;
 }
 
+
+vector<bool> intersection(vector<bool> &v1, vector<bool> &v2) {
+    vector<bool> v3;
+    for(int i = 0; i < v1.size(); i++) {
+      if(v1[i] && v2[i]) {
+        v3[i]->push_back(false);
+      } else {
+        v3[i]->push_back(true);
+      }
+    }
+    return v3;
+}
+
+
 void Function::compute_dom() {
   list<Basic_block *>::iterator it, it2;
   list<Basic_block *> workinglist;
@@ -324,6 +338,55 @@ void Function::compute_dom() {
   comput_succ_pred_BB();
 
   /* A REMPLIR */
+  vector<Basic_block *> setT;
+  vector<Basic_block *> setD;
+  Basic_block *succ;
+  workinglist.push_back(*(_myBB.begin());      /* init list BB */
+
+  while (workinglist.size != 0) {
+    change = false;
+    current = workinglist.pop_front();
+
+    setT = {};
+    it = _myBB.begin();
+    int tmp = 0;
+    int index = 0;
+    for (int i = 0; i < size; i++) {  // TODO: check if T = N good
+      if (current == *it) {
+        index = tmp;                  //Get index
+      }
+      bb = *it;
+      setT.add(false);
+      tmp++;
+      it++;
+    }
+
+    for (int i = 0; i < current->get_nb_pred(); i++) {
+      pred = bb->get_predecessor(i);
+      setT = intersection(setT, pred->Domin);
+    }
+
+    setD = setT;
+    setD[index] = true; //Add himself
+
+    if (setD != current->Domin) {
+      current->Domin = setD;
+      change = true;
+    }
+
+    if (change) {
+      for (int i = 0; i < current->get_nb_succ(); i++) {
+        succ = bb->get_successor1(i);
+        if(succ) {
+          workinglist.push_back(succ);
+        }
+        succ = bb->get_successor2(i);
+        if(succ) {
+          workinglist.push_back(succ);
+        }
+      }
+    }
+  }
 
   // affichage du resultat
   it = _myBB.begin();
@@ -351,9 +414,11 @@ void Function::compute_live_var() {
   it = _myBB.begin();
 
   /* A REMPLIR avec algo vu en cours et en TD*/
-  /* algorithme itératif qui part des blocs sans successeur, ne pas oublier que
+  /* algorithme itératif qui part des blocs sans successeur, ne pas oublier
+   * que
    * lorsque l'on sort d'une fonction le registre $2 contient le résultat (il
-   * est donc vivant), le registre pointeur de pile ($29) est aussi vivant ! */
+   * est donc vivant), le registre pointeur de pile ($29) est aussi vivant !
+   */
 
   // Affichage du resultat
   it2 = _myBB.begin();
@@ -379,9 +444,12 @@ void Function::compute_live_var() {
   return;
 }
 
-/* en implementant la fonction test de la classe BB, permet de tester des choses
- * sur tous les blocs de base d'une fonction par exemple l'affichage de tous les
- * BB d'une fonction ou l'affichage des succ/pred des BBs comme c'est le cas --
+/* en implementant la fonction test de la classe BB, permet de tester des
+ * choses
+ * sur tous les blocs de base d'une fonction par exemple l'affichage de tous
+ * les
+ * BB d'une fonction ou l'affichage des succ/pred des BBs comme c'est le cas
+ * --
  * voir la classe Basic_block et la méthode test */
 
 void Function::test() {
