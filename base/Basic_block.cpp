@@ -377,7 +377,7 @@ void Basic_block::comput_pred_succ_dep(){
          add_dep_link(i_current, itmp, WAW);
        }
        if(i_current->is_dep_MEM(itmp)) {
-         add_dep_link(i_current, itmp, MEM);
+         add_dep_link(i_current, itmp, MEMDEP);
        }
      }
    }
@@ -426,21 +426,22 @@ int Basic_block::nb_cycles(){
    comput_pred_succ_dep();
 
    /* A REMPLIR */
-   Instruction *i_current;
-   list<dep*>::iterator it;
+   Instruction *current;
+   list<dep *>::iterator it;
+   dep* tmp;
    for (int i=0; i< get_nb_inst(); i++){
-     i_current = get_instruction_at_index(i);
+     current = get_instruction_at_index(i);
 
      if(i =! 0) {
-       inst_cycle[i] = std::max(inst_cycle[i], (inst_cycle[i - 1] + inst->get_latency()));
+       inst_cycle[i] = std::max(inst_cycle[i], (inst_cycle[i - 1] + current->get_latency()));
      }
 
-     it = inst->succ_begin();
-     for (int j = 0; j < inst->succ_size(); j++) {
-       dep = *it;
-       if (dep.type == RAW) {
-         int tmp = inst_cycle[i] + delai(inst->get_type(), dep.inst->get_type());
-         inst_cycle[i] = std::max(inst_cycle[i], tmp);
+     it = current->succ_begin();
+     for (int j = 0; j < current->get_nb_succ(); j++) {
+       tmp = *it;
+       if (tmp->type == RAW) {
+         int cycle = inst_cycle[i] + delai(current->get_type(), tmp->inst->get_type());
+         inst_cycle[i] = std::max(inst_cycle[i], cycle);
        }
        it++;
      }
