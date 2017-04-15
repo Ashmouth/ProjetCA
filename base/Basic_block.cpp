@@ -425,13 +425,26 @@ int Basic_block::nb_cycles(){
    }
    comput_pred_succ_dep();
 
-
-
    /* A REMPLIR */
-   for (int i=0; i< get_nb_inst(); i++ ){
-     inst_cycle[i] = -1;
-   }
+   Instruction *i_current;
+   list<dep*>::iterator it;
+   for (int i=0; i< get_nb_inst(); i++){
+     i_current = get_instruction_at_index(i);
 
+     if(i =! 0) {
+       inst_cycle[i] = std::max(inst_cycle[i], (inst_cycle[i - 1] + inst->get_latency()));
+     }
+
+     it = inst->succ_begin();
+     for (int j = 0; j < inst->succ_size(); j++) {
+       dep = *it;
+       if (dep.type == RAW) {
+         int tmp = inst_cycle[i] + delai(inst->get_type(), dep.inst->get_type());
+         inst_cycle[i] = std::max(inst_cycle[i], tmp);
+       }
+       it++;
+     }
+   }
 
   return 0;
 }
