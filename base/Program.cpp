@@ -295,19 +295,20 @@ void  Program::comput_CFG(){
    Function *current;
    it=_myfunc.begin();
    int size=(int)_myfunc.size();
-
-   Cfg* cfg = new Cfg(get_firstBB(), size);
-   _myCFG.add
+/*
+   current=*it; //ième fonction du programme
+   Cfg* cfg = new Cfg(current->get_firstBB(), size);
+   _myCFG.add(cfg);
    for(int i = 0; i < size; i++) {
      current=*it; //ième fonction du programme
 
-     /* A REMPLIR */
-     add_CFG(current.get_BB(i));
+     // TODO: A REMPLIR
+     _myCFG.add(current->get_BB(i));
      //Cfg* cfg = new Cfg(get_firstBB(), size);
 
 
      it++; // on passe à la fonction suivante
-   }
+   }*/
    return;
 }
 

@@ -125,7 +125,7 @@ Label *Function::get_label(int index) {
     return *it;
   } else
     cout << "Error get_label : index is bigger than the size of the list"
-         << endl;
+      << endl;
 
   return _list_lab.back();
 }
@@ -186,7 +186,7 @@ void Function::comput_basic_block() {
 
   while (current != _end) {
 
-    if(current->isLabel() {
+    if(current->isLabel()) {
       if (debut == NULL) {
         debut = current;
       } else {
@@ -198,39 +198,23 @@ void Function::comput_basic_block() {
     if(current->isInst()) {
       if (debut == NULL) {
         debut = current;
-      } else {
-        i = getInst(current);
+      }
+      i = getInst(current);
 
-        if (i->is_branch()) {
-          if (i->is_cond_branch()) {
-            add_BB(debut, current->get_next(), current, ind);
-            current = current->get_next();
-            // debut = current->get_next()->get_next();
-            debut = NULL;
-            ind++;
-          }
-
-          if (i->is_indirect_branch()) {
-            add_BB(debut, current->get_prev(), NULL, ind);
-            // debut = current;
-            debut = NULL;
-            // debut = current->get_next();
-            ind++;
-          }
-
-          if (i->is_call()) {
-            add_BB(debut, current, NULL, ind);
-            debut = NULL;
-            ind++;
-          }
-        }
+      if (i->is_branch()) {
+        add_BB(debut, current->get_next(), current, ind);
+        current = current->get_next();
+        debut = NULL;
+        ind++;
       }
       prev = current;
     }
     current = current->get_next();
   }
 
-  add_BB(debut, prev, NULL, ind);
+  if(debut != NULL) {
+    add_BB(debut, prev, NULL, ind);
+  }
 
   if (verbose)
     cout << "end comput Basic Block" << endl;
@@ -291,21 +275,20 @@ void Function::comput_succ_pred_BB() {
     if (line != NULL) {
       instr = getInst(line);
 
-      if (!instr->is_indirect_branch()) {
-        if (instr->is_call()) {
-          // Add next block
-          current->set_link_succ_pred(*it++);
-
-        } else if (instr->is_cond_branch()) {
-          // Add branch block and rest
-          succ = find_label_BB(line);
-          current->set_link_succ_pred(succ);
-          current->set_link_succ_pred(*it++);
-        }
+      if (instr->is_indirect_branch()) {
+        // Add next block
+        current->set_link_succ_pred(*it++);
       }
-    } else {
-      // Add next block
-      current->set_link_succ_pred(*it++);
+      if (instr->is_call()) {
+        // Add next block
+        current->set_link_succ_pred(*it++);
+
+      } else if (instr->is_cond_branch()) {
+        // Add branch block and rest
+        succ = find_label_BB(instr->get_op_label());
+        current->set_link_succ_pred(succ);
+        current->set_link_succ_pred(*it++);
+      }
     }
   }
   // ne pas toucher ci-dessous
@@ -315,15 +298,15 @@ void Function::comput_succ_pred_BB() {
 
 
 vector<bool> intersection(vector<bool> &v1, vector<bool> &v2) {
-    vector<bool> v3;
-    for(int i = 0; i < v1.size(); i++) {
-      if(v1[i] && v2[i]) {
-        v3[i]->push_back(false);
-      } else {
-        v3[i]->push_back(true);
-      }
+  vector<bool> v3;
+  for(int i = 0; i < v1.size(); i++) {
+    if(v1[i] && v2[i]) {
+      v3.push_back(false);
+    } else {
+      v3.push_back(true);
     }
-    return v3;
+  }
+  return v3;
 }
 
 
@@ -338,14 +321,15 @@ void Function::compute_dom() {
   comput_succ_pred_BB();
 
   /* A REMPLIR */
-  vector<Basic_block *> setT;
-  vector<Basic_block *> setD;
+  vector<bool> setT;
+  vector<bool> setD;
   Basic_block *succ;
-  workinglist.push_back(*(_myBB.begin());      /* init list BB */
+  workinglist.push_back(*(_myBB.begin()));      /* init list BB */
 
-  while (workinglist.size != 0) {
+  while (workinglist.size() != 0) {
     change = false;
-    current = workinglist.pop_front();
+    current = workinglist.front();
+    workinglist.pop_front();
 
     setT = {};
     it = _myBB.begin();
@@ -356,7 +340,7 @@ void Function::compute_dom() {
         index = tmp;                  //Get index
       }
       bb = *it;
-      setT.add(false);
+      setT.push_back(false);
       tmp++;
       it++;
     }
@@ -376,11 +360,11 @@ void Function::compute_dom() {
 
     if (change) {
       for (int i = 0; i < current->get_nb_succ(); i++) {
-        succ = bb->get_successor1(i);
+        succ = bb->get_successor1();
         if(succ) {
           workinglist.push_back(succ);
         }
-        succ = bb->get_successor2(i);
+        succ = bb->get_successor2();
         if(succ) {
           workinglist.push_back(succ);
         }
