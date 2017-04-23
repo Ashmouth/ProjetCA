@@ -213,6 +213,7 @@ void Function::comput_basic_block() {
   }
 
   if(debut != NULL) {
+    cout << "basic_block.debut != null" << endl;
     add_BB(debut, prev, NULL, ind);
   }
 
@@ -267,29 +268,43 @@ void Function::comput_succ_pred_BB() {
     return;
 
   // A REMPLIR TODO
-  for (it = bb_list_begin(); it != bb_list_end(); it++) {
+  //for (it = bb_list_begin(); it != bb_list_end(); it++) {
+  //current = *it;
+  for (int index = 0; (current = get_BB(index)); index++) {
+    cout << index << endl;
 
-    current = *it;
     line = current->get_branch();
+    cout << "Pass line" << endl;
 
     if (line != NULL) {
+      cout << line->to_string() << endl;
       instr = getInst(line);
+      cout << "Pass getInst" << endl;
 
+//TODO: debug here
       if (instr->is_indirect_branch()) {
         // Add next block
-        current->set_link_succ_pred(*it++);
+        cout << "Pass startind" << endl;
+        current->set_link_succ_pred(get_BB(index+1));
+        cout << "Pass endind" << endl;
       }
       if (instr->is_call()) {
         // Add next block
-        current->set_link_succ_pred(*it++);
+        cout << "Pass startcall" << endl;
+        current->set_link_succ_pred(get_BB(index+1));
+        cout << "Pass endcall" << endl;
 
       } else if (instr->is_cond_branch()) {
         // Add branch block and rest
+        cout << "Pass startbranch" << endl;
         succ = find_label_BB(instr->get_op_label());
+        cout << "Pass find_label" << endl;
         current->set_link_succ_pred(succ);
-        current->set_link_succ_pred(*it++);
+        current->set_link_succ_pred(get_BB(index+1));
+        cout << "Pass endbranch" << endl;
       }
     }
+    cout << "Pass loop" << endl;
   }
   // ne pas toucher ci-dessous
   BB_pred_succ = true;
