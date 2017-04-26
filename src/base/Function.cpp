@@ -412,12 +412,42 @@ void Function::compute_live_var() {
   int size = (int)_myBB.size();
   it = _myBB.begin();
 
-  /* A REMPLIR avec algo vu en cours et en TD*/
+    /* TODO A REMPLIR avec algo vu en cours et en TD*/
   /* algorithme itératif qui part des blocs sans successeur, ne pas oublier
    * que
    * lorsque l'on sort d'une fonction le registre $2 contient le résultat (il
    * est donc vivant), le registre pointeur de pile ($29) est aussi vivant !
    */
+
+  //TODO: Do a loop in a bb and add $2 and $29
+  it = _myBB.end();
+  for(int i = size; i > 0; i--) {
+    bb = *it;
+    //LiveOut(bb) = U LiveIn(bb')
+    if(i < size) {
+      for(int j = 0; j < bb->get_nb_pred(); j++) {
+        pred = bb->get_predecessor(j);
+        for(int k = 0; k < NB_REG; k++) {
+          bb->LiveOut[j] = LiveIn[j];
+        }
+      }
+    }
+
+    //LiveIn(bb) = use(bb) U (LiveOut(bb)\def(bb))
+    for(int j = 0; j < NB_REG; j++) {
+      boolean tmp = true;
+      if(bb->LiveOut[j] == bb->DEF[j]) {
+        tmp = false;
+      }
+      bb->LiveIn[j] = (bb->Use[j] || tmp);
+    }
+
+    //$i dead if LiveIn/Out(bb)
+    //$i dead if LiveIn/Out(bb) but in bb
+
+    it--;
+  }
+
 
   // Affichage du resultat
   it2 = _myBB.begin();

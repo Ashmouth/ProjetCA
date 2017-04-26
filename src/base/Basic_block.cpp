@@ -459,11 +459,37 @@ ne pas oublier les conventions d'appel : les registres $4, $5, $6, $7 peuvent co
 
 ******************/
 
+
 void Basic_block::compute_use_def(void){
-  Instruction * inst = get_first_instruction();
   if (use_def_done) return;
 
-  /* A REMPLIR */
+  /* TODO: A REMPLIR */
+  for (int i = 0; i < get_nb_inst(); i++) {
+    Instruction * inst = get_inst(i);
+    OPRegister* src1 = inst->get_reg_src1();
+    OPRegister* src2 = inst->get_reg_src2();
+    OPRegister* dst = inst->get_reg_dst();
+
+    if (src1 != null && Def[src1->get_reg()] == false) {
+      Use[src1->get_reg()] = true;
+    }
+
+    if (src2 != null && Def[src2->get_reg()] == false) {
+      Use[src2->get_reg()] = true;
+    }
+
+    if (dst != null) {
+      Def[dst->get_reg()] = true;
+    }
+
+    if (cur->is_call()) {
+      Def[31] = true;
+      Def[2] = true;
+      Use[4] = true;
+      Use[5] = true;
+      Use[6] = true;
+    }
+  }
 
 #ifdef DEBUG
   cout << "****** BB " << get_index() << "************" << endl;
