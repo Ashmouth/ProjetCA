@@ -465,24 +465,24 @@ void Basic_block::compute_use_def(void){
 
   /* TODO: A REMPLIR */
   for (int i = 0; i < get_nb_inst(); i++) {
-    Instruction * inst = get_inst(i);
+    Instruction * inst = get_instruction_at_index(i);
     OPRegister* src1 = inst->get_reg_src1();
     OPRegister* src2 = inst->get_reg_src2();
     OPRegister* dst = inst->get_reg_dst();
 
-    if (src1 != null && Def[src1->get_reg()] == false) {
+    if (src1 != NULL && Def[src1->get_reg()] == false) {
       Use[src1->get_reg()] = true;
     }
 
-    if (src2 != null && Def[src2->get_reg()] == false) {
+    if (src2 != NULL && Def[src2->get_reg()] == false) {
       Use[src2->get_reg()] = true;
     }
 
-    if (dst != null) {
+    if (dst != NULL) {
       Def[dst->get_reg()] = true;
     }
 
-    if (cur->is_call()) {
+    if (inst->is_call()) {
       Def[31] = true;
       Def[2] = true;
       Use[4] = true;

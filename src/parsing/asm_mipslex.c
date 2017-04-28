@@ -1,6 +1,6 @@
-#line 1 "src/parsing/asm_mipslex.c"
+#line 2 "src/parsing/asm_mipslex.c"
 
-#line 3 "src/parsing/asm_mipslex.c"
+#line 4 "src/parsing/asm_mipslex.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -27,89 +27,11 @@
 
 #define FLEX_SCANNER
 #define YY_FLEX_MAJOR_VERSION 2
-#define YY_FLEX_MINOR_VERSION 6
-#define YY_FLEX_SUBMINOR_VERSION 3
+#define YY_FLEX_MINOR_VERSION 5
+#define YY_FLEX_SUBMINOR_VERSION 39
 #if YY_FLEX_SUBMINOR_VERSION > 0
 #define FLEX_BETA
 #endif
-
-    #define yy_create_buffer asm_mips_create_buffer
-
-    #define yy_delete_buffer asm_mips_delete_buffer
-
-    #define yy_scan_buffer asm_mips_scan_buffer
-
-    #define yy_scan_string asm_mips_scan_string
-
-    #define yy_scan_bytes asm_mips_scan_bytes
-
-    #define yy_init_buffer asm_mips_init_buffer
-
-    #define yy_flush_buffer asm_mips_flush_buffer
-
-    #define yy_load_buffer_state asm_mips_load_buffer_state
-
-    #define yy_switch_to_buffer asm_mips_switch_to_buffer
-
-    #define yypush_buffer_state asm_mipspush_buffer_state
-
-    #define yypop_buffer_state asm_mipspop_buffer_state
-
-    #define yyensure_buffer_stack asm_mipsensure_buffer_stack
-
-    #define yylex asm_mipslex
-
-    #define yyrestart asm_mipsrestart
-
-    #define yylex_init asm_mipslex_init
-
-    #define yylex_init_extra asm_mipslex_init_extra
-
-    #define yylex_destroy asm_mipslex_destroy
-
-    #define yyget_debug asm_mipsget_debug
-
-    #define yyset_debug asm_mipsset_debug
-
-    #define yyget_extra asm_mipsget_extra
-
-    #define yyset_extra asm_mipsset_extra
-
-    #define yyget_in asm_mipsget_in
-
-    #define yyset_in asm_mipsset_in
-
-    #define yyget_out asm_mipsget_out
-
-    #define yyset_out asm_mipsset_out
-
-    #define yyget_leng asm_mipsget_leng
-
-    #define yyget_text asm_mipsget_text
-
-    #define yyget_lineno asm_mipsget_lineno
-
-    #define yyset_lineno asm_mipsset_lineno
-
-    #define yywrap asm_mipswrap
-
-    #define yyalloc asm_mipsalloc
-
-    #define yyrealloc asm_mipsrealloc
-
-    #define yyfree asm_mipsfree
-
-    #define yytext asm_mipstext
-
-    #define yyleng asm_mipsleng
-
-    #define yyin asm_mipsin
-
-    #define yyout asm_mipsout
-
-    #define yy_flex_debug asm_mips_flex_debug
-
-    #define yylineno asm_mipslineno
 
 /* First, we deal with  platform-specific or compiler-specific issues. */
 
@@ -185,38 +107,56 @@ typedef unsigned int flex_uint32_t;
 
 #endif /* ! FLEXINT_H */
 
-/* TODO: this is always defined, so inline it */
-#define yyconst const
+#ifdef __cplusplus
 
-#if defined(__GNUC__) && __GNUC__ >= 3
-#define yynoreturn __attribute__((__noreturn__))
+/* The "const" storage-class-modifier is valid. */
+#define YY_USE_CONST
+
+#else	/* ! __cplusplus */
+
+/* C99 requires __STDC__ to be defined as 1. */
+#if defined (__STDC__)
+
+#define YY_USE_CONST
+
+#endif	/* defined (__STDC__) */
+#endif	/* ! __cplusplus */
+
+#ifdef YY_USE_CONST
+#define yyconst const
 #else
-#define yynoreturn
+#define yyconst
 #endif
 
 /* Returned upon end-of-file. */
 #define YY_NULL 0
 
-/* Promotes a possibly negative, possibly signed char to an
- *   integer in range [0..255] for use as an array index.
+/* Promotes a possibly negative, possibly signed char to an unsigned
+ * integer for use as an array index.  If the signed char is negative,
+ * we want to instead treat it as an 8-bit unsigned char, hence the
+ * double cast.
  */
-#define YY_SC_TO_UI(c) ((YY_CHAR) (c))
+#define YY_SC_TO_UI(c) ((unsigned int) (unsigned char) c)
 
 /* Enter a start condition.  This macro really ought to take a parameter,
  * but we do it the disgusting crufty way forced on us by the ()-less
  * definition of BEGIN.
  */
 #define BEGIN (yy_start) = 1 + 2 *
+
 /* Translate the current start state into a value that can be later handed
  * to BEGIN to return to the state.  The YYSTATE alias is for lex
  * compatibility.
  */
 #define YY_START (((yy_start) - 1) / 2)
 #define YYSTATE YY_START
+
 /* Action number for EOF rule of a given start state. */
 #define YY_STATE_EOF(state) (YY_END_OF_BUFFER + state + 1)
+
 /* Special action meaning "start processing a new file". */
 #define YY_NEW_FILE asm_mipsrestart(asm_mipsin  )
+
 #define YY_END_OF_BUFFER_CHAR 0
 
 /* Size of default input buffer. */
@@ -246,14 +186,14 @@ typedef struct yy_buffer_state *YY_BUFFER_STATE;
 typedef size_t yy_size_t;
 #endif
 
-extern int asm_mipsleng;
+extern yy_size_t asm_mipsleng;
 
 extern FILE *asm_mipsin, *asm_mipsout;
 
 #define EOB_ACT_CONTINUE_SCAN 0
 #define EOB_ACT_END_OF_FILE 1
 #define EOB_ACT_LAST_MATCH 2
-    
+
     #define YY_LESS_LINENO(n)
     #define YY_LINENO_REWIND_TO(ptr)
     
@@ -270,6 +210,7 @@ extern FILE *asm_mipsin, *asm_mipsout;
 		YY_DO_BEFORE_ACTION; /* set up asm_mipstext again */ \
 		} \
 	while ( 0 )
+
 #define unput(c) yyunput( c, (yytext_ptr)  )
 
 #ifndef YY_STRUCT_YY_BUFFER_STATE
@@ -284,12 +225,12 @@ struct yy_buffer_state
 	/* Size of input buffer in bytes, not including room for EOB
 	 * characters.
 	 */
-	int yy_buf_size;
+	yy_size_t yy_buf_size;
 
 	/* Number of characters read into yy_ch_buf, not including EOB
 	 * characters.
 	 */
-	int yy_n_chars;
+	yy_size_t yy_n_chars;
 
 	/* Whether we "own" the buffer - i.e., we know we created it,
 	 * and can realloc() it to grow it, and should free() it to
@@ -312,7 +253,7 @@ struct yy_buffer_state
 
     int yy_bs_lineno; /**< The line count. */
     int yy_bs_column; /**< The column count. */
-
+    
 	/* Whether to try to fill the input buffer when we reach the
 	 * end of it.
 	 */
@@ -340,7 +281,7 @@ struct yy_buffer_state
 /* Stack of input buffers. */
 static size_t yy_buffer_stack_top = 0; /**< index of top of stack. */
 static size_t yy_buffer_stack_max = 0; /**< capacity of stack. */
-static YY_BUFFER_STATE * yy_buffer_stack = NULL; /**< Stack as an array. */
+static YY_BUFFER_STATE * yy_buffer_stack = 0; /**< Stack as an array. */
 
 /* We provide macros for accessing buffer states in case in the
  * future we want to put the buffer states in a more general
@@ -351,6 +292,7 @@ static YY_BUFFER_STATE * yy_buffer_stack = NULL; /**< Stack as an array. */
 #define YY_CURRENT_BUFFER ( (yy_buffer_stack) \
                           ? (yy_buffer_stack)[(yy_buffer_stack_top)] \
                           : NULL)
+
 /* Same as previous macro, but useful when we know that the buffer stack is not
  * NULL or when we need an lvalue. For internal use only.
  */
@@ -358,11 +300,11 @@ static YY_BUFFER_STATE * yy_buffer_stack = NULL; /**< Stack as an array. */
 
 /* yy_hold_char holds the character lost when asm_mipstext is formed. */
 static char yy_hold_char;
-static int yy_n_chars;		/* number of characters read into yy_ch_buf */
-int asm_mipsleng;
+static yy_size_t yy_n_chars;		/* number of characters read into yy_ch_buf */
+yy_size_t asm_mipsleng;
 
 /* Points to current character in buffer. */
-static char *yy_c_buf_p = NULL;
+static char *yy_c_buf_p = (char *) 0;
 static int yy_init = 0;		/* whether we need to initialize */
 static int yy_start = 0;	/* start state number */
 
@@ -371,28 +313,30 @@ static int yy_start = 0;	/* start state number */
  */
 static int yy_did_buffer_switch_on_eof;
 
-void asm_mipsrestart ( FILE *input_file  );
-void asm_mips_switch_to_buffer ( YY_BUFFER_STATE new_buffer  );
-YY_BUFFER_STATE asm_mips_create_buffer ( FILE *file, int size  );
-void asm_mips_delete_buffer ( YY_BUFFER_STATE b  );
-void asm_mips_flush_buffer ( YY_BUFFER_STATE b  );
-void asm_mipspush_buffer_state ( YY_BUFFER_STATE new_buffer  );
-void asm_mipspop_buffer_state ( void );
+void asm_mipsrestart (FILE *input_file  );
+void asm_mips_switch_to_buffer (YY_BUFFER_STATE new_buffer  );
+YY_BUFFER_STATE asm_mips_create_buffer (FILE *file,int size  );
+void asm_mips_delete_buffer (YY_BUFFER_STATE b  );
+void asm_mips_flush_buffer (YY_BUFFER_STATE b  );
+void asm_mipspush_buffer_state (YY_BUFFER_STATE new_buffer  );
+void asm_mipspop_buffer_state (void );
 
-static void asm_mipsensure_buffer_stack ( void );
-static void asm_mips_load_buffer_state ( void );
-static void asm_mips_init_buffer ( YY_BUFFER_STATE b, FILE *file  );
+static void asm_mipsensure_buffer_stack (void );
+static void asm_mips_load_buffer_state (void );
+static void asm_mips_init_buffer (YY_BUFFER_STATE b,FILE *file  );
+
 #define YY_FLUSH_BUFFER asm_mips_flush_buffer(YY_CURRENT_BUFFER )
 
-YY_BUFFER_STATE asm_mips_scan_buffer ( char *base, yy_size_t size  );
-YY_BUFFER_STATE asm_mips_scan_string ( const char *yy_str  );
-YY_BUFFER_STATE asm_mips_scan_bytes ( const char *bytes, int len  );
+YY_BUFFER_STATE asm_mips_scan_buffer (char *base,yy_size_t size  );
+YY_BUFFER_STATE asm_mips_scan_string (yyconst char *yy_str  );
+YY_BUFFER_STATE asm_mips_scan_bytes (yyconst char *bytes,yy_size_t len  );
 
-void *asm_mipsalloc ( yy_size_t  );
-void *asm_mipsrealloc ( void *, yy_size_t  );
-void asm_mipsfree ( void *  );
+void *asm_mipsalloc (yy_size_t  );
+void *asm_mipsrealloc (void *,yy_size_t  );
+void asm_mipsfree (void *  );
 
 #define yy_new_buffer asm_mips_create_buffer
+
 #define yy_set_interactive(is_interactive) \
 	{ \
 	if ( ! YY_CURRENT_BUFFER ){ \
@@ -402,6 +346,7 @@ void asm_mipsfree ( void *  );
 	} \
 	YY_CURRENT_BUFFER_LVALUE->yy_is_interactive = is_interactive; \
 	}
+
 #define yy_set_bol(at_bol) \
 	{ \
 	if ( ! YY_CURRENT_BUFFER ){\
@@ -411,38 +356,39 @@ void asm_mipsfree ( void *  );
 	} \
 	YY_CURRENT_BUFFER_LVALUE->yy_at_bol = at_bol; \
 	}
+
 #define YY_AT_BOL() (YY_CURRENT_BUFFER_LVALUE->yy_at_bol)
 
 /* Begin user sect3 */
-typedef flex_uint8_t YY_CHAR;
 
-FILE *asm_mipsin = NULL, *asm_mipsout = NULL;
+typedef unsigned char YY_CHAR;
+
+FILE *asm_mipsin = (FILE *) 0, *asm_mipsout = (FILE *) 0;
 
 typedef int yy_state_type;
 
 extern int asm_mipslineno;
+
 int asm_mipslineno = 1;
 
 extern char *asm_mipstext;
-#ifdef yytext_ptr
-#undef yytext_ptr
-#endif
 #define yytext_ptr asm_mipstext
 
-static yy_state_type yy_get_previous_state ( void );
-static yy_state_type yy_try_NUL_trans ( yy_state_type current_state  );
-static int yy_get_next_buffer ( void );
-static void yynoreturn yy_fatal_error ( const char* msg  );
+static yy_state_type yy_get_previous_state (void );
+static yy_state_type yy_try_NUL_trans (yy_state_type current_state  );
+static int yy_get_next_buffer (void );
+static void yy_fatal_error (yyconst char msg[]  );
 
 /* Done after the current pattern has been matched and before the
  * corresponding action - sets up asm_mipstext.
  */
 #define YY_DO_BEFORE_ACTION \
 	(yytext_ptr) = yy_bp; \
-	asm_mipsleng = (int) (yy_cp - yy_bp); \
+	asm_mipsleng = (size_t) (yy_cp - yy_bp); \
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
+
 #define YY_NUM_RULES 30
 #define YY_END_OF_BUFFER 31
 /* This struct is not used in this scanner,
@@ -452,7 +398,7 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[77] =
+static yyconst flex_int16_t yy_accept[77] =
     {   0,
         0,    0,   31,   30,    3,    1,   30,   30,   26,   30,
         4,   30,   14,   15,   10,    8,   16,   13,   26,    9,
@@ -464,7 +410,7 @@ static const flex_int16_t yy_accept[77] =
         0,    0,    0,   25,    0,    0
     } ;
 
-static const YY_CHAR yy_ec[256] =
+static yyconst flex_int32_t yy_ec[256] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -496,7 +442,7 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static const YY_CHAR yy_meta[40] =
+static yyconst flex_int32_t yy_meta[40] =
     {   0,
         1,    1,    1,    2,    1,    3,    1,    1,    4,    1,
         5,    1,    1,    1,    1,    3,    1,    6,    6,    6,
@@ -504,7 +450,7 @@ static const YY_CHAR yy_meta[40] =
         1,    3,    9,    9,   10,    3,   10,    1,    1
     } ;
 
-static const flex_int16_t yy_base[88] =
+static yyconst flex_int16_t yy_base[88] =
     {   0,
         0,    0,  128,  293,  293,  293,   36,  124,   23,   49,
       293,   96,  293,  293,  293,  293,  293,  293,    0,  293,
@@ -517,7 +463,7 @@ static const flex_int16_t yy_base[88] =
       240,  249,  258,  263,  270,  275,  282
     } ;
 
-static const flex_int16_t yy_def[88] =
+static yyconst flex_int16_t yy_def[88] =
     {   0,
        76,    1,   76,   76,   76,   76,   77,   78,   79,   76,
        76,   80,   76,   76,   76,   76,   76,   76,   79,   76,
@@ -530,7 +476,7 @@ static const flex_int16_t yy_def[88] =
        76,   76,   76,   76,   76,   76,   76
     } ;
 
-static const flex_int16_t yy_nxt[333] =
+static yyconst flex_int16_t yy_nxt[333] =
     {   0,
         4,    5,    6,    7,    8,    9,   10,   11,   12,   13,
        14,   15,   16,   17,   18,   19,   20,   21,   22,   22,
@@ -571,7 +517,7 @@ static const flex_int16_t yy_nxt[333] =
        76,   76
     } ;
 
-static const flex_int16_t yy_chk[333] =
+static yyconst flex_int16_t yy_chk[333] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -662,8 +608,7 @@ static unsigned int search_valu  ();
 
 //#define YY_DECL int asm_mipslex ();
 //#define yylval  ()
-#line 665 "src/parsing/asm_mipslex.c"
-#line 666 "src/parsing/asm_mipslex.c"
+#line 612 "src/parsing/asm_mipslex.c"
 
 #define INITIAL 0
 
@@ -679,36 +624,36 @@ static unsigned int search_valu  ();
 #define YY_EXTRA_TYPE void *
 #endif
 
-static int yy_init_globals ( void );
+static int yy_init_globals (void );
 
 /* Accessor methods to globals.
    These are made visible to non-reentrant scanners for convenience. */
 
-int asm_mipslex_destroy ( void );
+int asm_mipslex_destroy (void );
 
-int asm_mipsget_debug ( void );
+int asm_mipsget_debug (void );
 
-void asm_mipsset_debug ( int debug_flag  );
+void asm_mipsset_debug (int debug_flag  );
 
-YY_EXTRA_TYPE asm_mipsget_extra ( void );
+YY_EXTRA_TYPE asm_mipsget_extra (void );
 
-void asm_mipsset_extra ( YY_EXTRA_TYPE user_defined  );
+void asm_mipsset_extra (YY_EXTRA_TYPE user_defined  );
 
-FILE *asm_mipsget_in ( void );
+FILE *asm_mipsget_in (void );
 
-void asm_mipsset_in  ( FILE * _in_str  );
+void asm_mipsset_in  (FILE * in_str  );
 
-FILE *asm_mipsget_out ( void );
+FILE *asm_mipsget_out (void );
 
-void asm_mipsset_out  ( FILE * _out_str  );
+void asm_mipsset_out  (FILE * out_str  );
 
-			int asm_mipsget_leng ( void );
+yy_size_t asm_mipsget_leng (void );
 
-char *asm_mipsget_text ( void );
+char *asm_mipsget_text (void );
 
-int asm_mipsget_lineno ( void );
+int asm_mipsget_lineno (void );
 
-void asm_mipsset_lineno ( int _line_number  );
+void asm_mipsset_lineno (int line_number  );
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -716,31 +661,28 @@ void asm_mipsset_lineno ( int _line_number  );
 
 #ifndef YY_SKIP_YYWRAP
 #ifdef __cplusplus
-extern "C" int asm_mipswrap ( void );
+extern "C" int asm_mipswrap (void );
 #else
-extern int asm_mipswrap ( void );
+extern int asm_mipswrap (void );
 #endif
 #endif
 
-#ifndef YY_NO_UNPUT
+    static void yyunput (int c,char *buf_ptr  );
     
-    static void yyunput ( int c, char *buf_ptr  );
-    
-#endif
-
 #ifndef yytext_ptr
-static void yy_flex_strncpy ( char *, const char *, int );
+static void yy_flex_strncpy (char *,yyconst char *,int );
 #endif
 
 #ifdef YY_NEED_STRLEN
-static int yy_flex_strlen ( const char * );
+static int yy_flex_strlen (yyconst char * );
 #endif
 
 #ifndef YY_NO_INPUT
+
 #ifdef __cplusplus
-static int yyinput ( void );
+static int yyinput (void );
 #else
-static int input ( void );
+static int input (void );
 #endif
 
 #endif
@@ -760,7 +702,7 @@ static int input ( void );
 /* This used to be an fputs(), but since the string might contain NUL's,
  * we now use fwrite().
  */
-#define ECHO do { if (fwrite( asm_mipstext, (size_t) asm_mipsleng, 1, asm_mipsout )) {} } while (0)
+#define ECHO do { if (fwrite( asm_mipstext, asm_mipsleng, 1, asm_mipsout )) {} } while (0)
 #endif
 
 /* Gets input and stuffs it into "buf".  number of characters read, or YY_NULL,
@@ -771,7 +713,7 @@ static int input ( void );
 	if ( YY_CURRENT_BUFFER_LVALUE->yy_is_interactive ) \
 		{ \
 		int c = '*'; \
-		int n; \
+		size_t n; \
 		for ( n = 0; n < max_size && \
 			     (c = getc( asm_mipsin )) != EOF && c != '\n'; ++n ) \
 			buf[n] = (char) c; \
@@ -784,7 +726,7 @@ static int input ( void );
 	else \
 		{ \
 		errno=0; \
-		while ( (result = (int) fread(buf, 1, (yy_size_t) max_size, asm_mipsin)) == 0 && ferror(asm_mipsin)) \
+		while ( (result = fread(buf, 1, max_size, asm_mipsin))==0 && ferror(asm_mipsin)) \
 			{ \
 			if( errno != EINTR) \
 				{ \
@@ -839,7 +781,7 @@ extern int asm_mipslex (void);
 
 /* Code executed at the end of each rule. */
 #ifndef YY_BREAK
-#define YY_BREAK /*LINTED*/break;
+#define YY_BREAK break;
 #endif
 
 #define YY_RULE_SETUP \
@@ -849,9 +791,9 @@ extern int asm_mipslex (void);
  */
 YY_DECL
 {
-	yy_state_type yy_current_state;
-	char *yy_cp, *yy_bp;
-	int yy_act;
+	register yy_state_type yy_current_state;
+	register char *yy_cp, *yy_bp;
+	register int yy_act;
     
 	if ( !(yy_init) )
 		{
@@ -882,9 +824,9 @@ YY_DECL
 	{
 #line 67 "src/parsing/asm_mips.lex"
 
-#line 885 "src/parsing/asm_mipslex.c"
+#line 828 "src/parsing/asm_mipslex.c"
 
-	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
+	while ( 1 )		/* loops until end-of-file is reached */
 		{
 		yy_cp = (yy_c_buf_p);
 
@@ -900,7 +842,7 @@ YY_DECL
 yy_match:
 		do
 			{
-			YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)] ;
+			register YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)] ;
 			if ( yy_accept[yy_current_state] )
 				{
 				(yy_last_accepting_state) = yy_current_state;
@@ -910,9 +852,9 @@ yy_match:
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
 				if ( yy_current_state >= 77 )
-					yy_c = yy_meta[yy_c];
+					yy_c = yy_meta[(unsigned int) yy_c];
 				}
-			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
+			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
 		while ( yy_base[yy_current_state] != 293 );
@@ -1024,9 +966,9 @@ case 17:
 YY_RULE_SETUP
 #line 84 "src/parsing/asm_mips.lex"
 {
- 		//yylval.uval = utl_HexToInt (yytext + 2, NULL);
+ 		//yylval.uval = utl_HexToInt (asm_mipstext + 2, NULL);
 		int rt ;
-		rt = strtol(yytext+2,NULL,16) ;
+		rt = strtol(asm_mipstext+2,NULL,16) ;
  		yylval.uval = rt ;
 		//printf("hex_value : %d",rt) ;
 		return (Litteral);
@@ -1036,9 +978,9 @@ case 18:
 YY_RULE_SETUP
 #line 92 "src/parsing/asm_mips.lex"
 {
- 		//yylval.uval = utl_OctToInt (yytext + 2, NULL);
+ 		//yylval.uval = utl_OctToInt (asm_mipstext + 2, NULL);
 		int rt ;
-		rt = strtol(yytext+2,NULL,8) ;
+		rt = strtol(asm_mipstext+2,NULL,8) ;
  		yylval.uval = rt ;
 		return (Litteral);
 			}
@@ -1047,7 +989,7 @@ case 19:
 YY_RULE_SETUP
 #line 99 "src/parsing/asm_mips.lex"
 {
- 		yylval.uval = utl_BinToInt (yytext + 2, NULL);
+ 		yylval.uval = utl_BinToInt (asm_mipstext + 2, NULL);
 		return (Litteral);
 			}
 	YY_BREAK
@@ -1055,7 +997,7 @@ case 20:
 YY_RULE_SETUP
 #line 103 "src/parsing/asm_mips.lex"
 {
- 		if (sscanf (yytext, "%u", &yylval.uval) == 0)
+ 		if (sscanf (asm_mipstext, "%u", &yylval.uval) == 0)
 		  yylval.uval = 0;
 		return (Litteral);
 			}
@@ -1075,7 +1017,7 @@ YY_RULE_SETUP
 		char         *str    = NULL;
 		char          c_val  ;
 
-		str         = yytext + 1;
+		str         = asm_mipstext + 1;
 		c_val       = utl_CharToAscii (str, NULL);
 		yylval.uval = (unsigned int) c_val;
 		return (Litteral);
@@ -1088,7 +1030,7 @@ YY_RULE_SETUP
 {
 		char * str ;
 		
-		str = utl_SaveString (yytext);
+		str = utl_SaveString (asm_mipstext);
 	  	yylval.text = str;
 		return (String);
 		}
@@ -1097,7 +1039,7 @@ case 24:
 YY_RULE_SETUP
 #line 129 "src/parsing/asm_mips.lex"
 {
-		yylval.uval = atoi (yytext + 1);
+		yylval.uval = atoi (asm_mipstext + 1);
 		return (ARegister);
 			}
 	YY_BREAK
@@ -1107,7 +1049,7 @@ YY_RULE_SETUP
 {
 		char * str ;
 		
-		str = utl_SaveString (yytext);
+		str = utl_SaveString (asm_mipstext);
 	  	yylval.text = str;
 		return (GCC_operator);
 		}
@@ -1119,7 +1061,7 @@ YY_RULE_SETUP
 		int           token;
 		char         *ident;
 
-		ident = utl_SaveString (yytext);
+		ident = utl_SaveString (asm_mipstext);
 		token = search_token   (ident );
 
 		if (token == 0)
@@ -1156,7 +1098,7 @@ YY_RULE_SETUP
 {
 		char * str ;
 		
-		str = utl_SaveString (yytext);
+		str = utl_SaveString (asm_mipstext);
 	  	yylval.text = str;
 		return (String2);
 		}
@@ -1166,7 +1108,7 @@ YY_RULE_SETUP
 #line 175 "src/parsing/asm_mips.lex"
 ECHO;
 	YY_BREAK
-#line 1169 "src/parsing/asm_mipslex.c"
+#line 1112 "src/parsing/asm_mipslex.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1309,9 +1251,9 @@ case YY_STATE_EOF(INITIAL):
  */
 static int yy_get_next_buffer (void)
 {
-    	char *dest = YY_CURRENT_BUFFER_LVALUE->yy_ch_buf;
-	char *source = (yytext_ptr);
-	int number_to_move, i;
+    	register char *dest = YY_CURRENT_BUFFER_LVALUE->yy_ch_buf;
+	register char *source = (yytext_ptr);
+	register int number_to_move, i;
 	int ret_val;
 
 	if ( (yy_c_buf_p) > &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars) + 1] )
@@ -1340,7 +1282,7 @@ static int yy_get_next_buffer (void)
 	/* Try to read more data. */
 
 	/* First move last chars to start of buffer. */
-	number_to_move = (int) ((yy_c_buf_p) - (yytext_ptr) - 1);
+	number_to_move = (int) ((yy_c_buf_p) - (yytext_ptr)) - 1;
 
 	for ( i = 0; i < number_to_move; ++i )
 		*(dest++) = *(source++);
@@ -1353,7 +1295,7 @@ static int yy_get_next_buffer (void)
 
 	else
 		{
-			int num_to_read =
+			yy_size_t num_to_read =
 			YY_CURRENT_BUFFER_LVALUE->yy_buf_size - number_to_move - 1;
 
 		while ( num_to_read <= 0 )
@@ -1367,7 +1309,7 @@ static int yy_get_next_buffer (void)
 
 			if ( b->yy_is_our_buffer )
 				{
-				int new_size = b->yy_buf_size * 2;
+				yy_size_t new_size = b->yy_buf_size * 2;
 
 				if ( new_size <= 0 )
 					b->yy_buf_size += b->yy_buf_size / 8;
@@ -1376,11 +1318,11 @@ static int yy_get_next_buffer (void)
 
 				b->yy_ch_buf = (char *)
 					/* Include room in for 2 EOB chars. */
-					asm_mipsrealloc((void *) b->yy_ch_buf,(yy_size_t) (b->yy_buf_size + 2)  );
+					asm_mipsrealloc((void *) b->yy_ch_buf,b->yy_buf_size + 2  );
 				}
 			else
 				/* Can't grow it, we don't own it. */
-				b->yy_ch_buf = NULL;
+				b->yy_ch_buf = 0;
 
 			if ( ! b->yy_ch_buf )
 				YY_FATAL_ERROR(
@@ -1422,10 +1364,10 @@ static int yy_get_next_buffer (void)
 	else
 		ret_val = EOB_ACT_CONTINUE_SCAN;
 
-	if (((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
+	if ((yy_size_t) ((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
 		/* Extend the array by 50%, plus the number we really need. */
-		int new_size = (yy_n_chars) + number_to_move + ((yy_n_chars) >> 1);
-		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) asm_mipsrealloc((void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf,(yy_size_t) new_size  );
+		yy_size_t new_size = (yy_n_chars) + number_to_move + ((yy_n_chars) >> 1);
+		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) asm_mipsrealloc((void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf,new_size  );
 		if ( ! YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
 			YY_FATAL_ERROR( "out of dynamic memory in yy_get_next_buffer()" );
 	}
@@ -1443,14 +1385,14 @@ static int yy_get_next_buffer (void)
 
     static yy_state_type yy_get_previous_state (void)
 {
-	yy_state_type yy_current_state;
-	char *yy_cp;
+	register yy_state_type yy_current_state;
+	register char *yy_cp;
     
 	yy_current_state = (yy_start);
 
 	for ( yy_cp = (yytext_ptr) + YY_MORE_ADJ; yy_cp < (yy_c_buf_p); ++yy_cp )
 		{
-		YY_CHAR yy_c = (*yy_cp ? yy_ec[YY_SC_TO_UI(*yy_cp)] : 1);
+		register YY_CHAR yy_c = (*yy_cp ? yy_ec[YY_SC_TO_UI(*yy_cp)] : 1);
 		if ( yy_accept[yy_current_state] )
 			{
 			(yy_last_accepting_state) = yy_current_state;
@@ -1460,9 +1402,9 @@ static int yy_get_next_buffer (void)
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
 			if ( yy_current_state >= 77 )
-				yy_c = yy_meta[yy_c];
+				yy_c = yy_meta[(unsigned int) yy_c];
 			}
-		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
+		yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 		}
 
 	return yy_current_state;
@@ -1475,10 +1417,10 @@ static int yy_get_next_buffer (void)
  */
     static yy_state_type yy_try_NUL_trans  (yy_state_type yy_current_state )
 {
-	int yy_is_jam;
-    	char *yy_cp = (yy_c_buf_p);
+	register int yy_is_jam;
+    	register char *yy_cp = (yy_c_buf_p);
 
-	YY_CHAR yy_c = 1;
+	register YY_CHAR yy_c = 1;
 	if ( yy_accept[yy_current_state] )
 		{
 		(yy_last_accepting_state) = yy_current_state;
@@ -1488,19 +1430,17 @@ static int yy_get_next_buffer (void)
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
 		if ( yy_current_state >= 77 )
-			yy_c = yy_meta[yy_c];
+			yy_c = yy_meta[(unsigned int) yy_c];
 		}
-	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
+	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 	yy_is_jam = (yy_current_state == 76);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
 
-#ifndef YY_NO_UNPUT
-
-    static void yyunput (int c, char * yy_bp )
+    static void yyunput (int c, register char * yy_bp )
 {
-	char *yy_cp;
+	register char *yy_cp;
     
     yy_cp = (yy_c_buf_p);
 
@@ -1510,10 +1450,10 @@ static int yy_get_next_buffer (void)
 	if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
 		{ /* need to shift things up to make room */
 		/* +2 for EOB chars. */
-		int number_to_move = (yy_n_chars) + 2;
-		char *dest = &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[
+		register yy_size_t number_to_move = (yy_n_chars) + 2;
+		register char *dest = &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[
 					YY_CURRENT_BUFFER_LVALUE->yy_buf_size + 2];
-		char *source =
+		register char *source =
 				&YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[number_to_move];
 
 		while ( source > YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
@@ -1522,7 +1462,7 @@ static int yy_get_next_buffer (void)
 		yy_cp += (int) (dest - source);
 		yy_bp += (int) (dest - source);
 		YY_CURRENT_BUFFER_LVALUE->yy_n_chars =
-			(yy_n_chars) = (int) YY_CURRENT_BUFFER_LVALUE->yy_buf_size;
+			(yy_n_chars) = YY_CURRENT_BUFFER_LVALUE->yy_buf_size;
 
 		if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
 			YY_FATAL_ERROR( "flex scanner push-back overflow" );
@@ -1534,8 +1474,6 @@ static int yy_get_next_buffer (void)
 	(yy_hold_char) = *yy_cp;
 	(yy_c_buf_p) = yy_cp;
 }
-
-#endif
 
 #ifndef YY_NO_INPUT
 #ifdef __cplusplus
@@ -1561,7 +1499,7 @@ static int yy_get_next_buffer (void)
 
 		else
 			{ /* need more input */
-			int offset = (int) ((yy_c_buf_p) - (yytext_ptr));
+			yy_size_t offset = (yy_c_buf_p) - (yytext_ptr);
 			++(yy_c_buf_p);
 
 			switch ( yy_get_next_buffer(  ) )
@@ -1585,7 +1523,7 @@ static int yy_get_next_buffer (void)
 				case EOB_ACT_END_OF_FILE:
 					{
 					if ( asm_mipswrap( ) )
-						return 0;
+						return EOF;
 
 					if ( ! (yy_did_buffer_switch_on_eof) )
 						YY_NEW_FILE;
@@ -1691,7 +1629,7 @@ static void asm_mips_load_buffer_state  (void)
 	/* yy_ch_buf has to be 2 characters longer than the size given because
 	 * we need to put in 2 end-of-buffer characters.
 	 */
-	b->yy_ch_buf = (char *) asm_mipsalloc((yy_size_t) (b->yy_buf_size + 2)  );
+	b->yy_ch_buf = (char *) asm_mipsalloc(b->yy_buf_size + 2  );
 	if ( ! b->yy_ch_buf )
 		YY_FATAL_ERROR( "out of dynamic memory in asm_mips_create_buffer()" );
 
@@ -1841,15 +1779,15 @@ static void asm_mipsensure_buffer_stack (void)
 		 * scanner will even need a stack. We use 2 instead of 1 to avoid an
 		 * immediate realloc on the next call.
          */
-      num_to_alloc = 1; /* After all that talk, this was set to 1 anyways... */
+		num_to_alloc = 1;
 		(yy_buffer_stack) = (struct yy_buffer_state**)asm_mipsalloc
 								(num_to_alloc * sizeof(struct yy_buffer_state*)
 								);
 		if ( ! (yy_buffer_stack) )
 			YY_FATAL_ERROR( "out of dynamic memory in asm_mipsensure_buffer_stack()" );
-
+								  
 		memset((yy_buffer_stack), 0, num_to_alloc * sizeof(struct yy_buffer_state*));
-
+				
 		(yy_buffer_stack_max) = num_to_alloc;
 		(yy_buffer_stack_top) = 0;
 		return;
@@ -1858,7 +1796,7 @@ static void asm_mipsensure_buffer_stack (void)
 	if ((yy_buffer_stack_top) >= ((yy_buffer_stack_max)) - 1){
 
 		/* Increase the buffer to prepare for a possible push. */
-		yy_size_t grow_size = 8 /* arbitrary grow size */;
+		int grow_size = 8 /* arbitrary grow size */;
 
 		num_to_alloc = (yy_buffer_stack_max) + grow_size;
 		(yy_buffer_stack) = (struct yy_buffer_state**)asm_mipsrealloc
@@ -1878,7 +1816,7 @@ static void asm_mipsensure_buffer_stack (void)
  * @param base the character buffer
  * @param size the size in bytes of the character buffer
  * 
- * @return the newly allocated buffer state object.
+ * @return the newly allocated buffer state object. 
  */
 YY_BUFFER_STATE asm_mips_scan_buffer  (char * base, yy_size_t  size )
 {
@@ -1888,16 +1826,16 @@ YY_BUFFER_STATE asm_mips_scan_buffer  (char * base, yy_size_t  size )
 	     base[size-2] != YY_END_OF_BUFFER_CHAR ||
 	     base[size-1] != YY_END_OF_BUFFER_CHAR )
 		/* They forgot to leave room for the EOB's. */
-		return NULL;
+		return 0;
 
 	b = (YY_BUFFER_STATE) asm_mipsalloc(sizeof( struct yy_buffer_state )  );
 	if ( ! b )
 		YY_FATAL_ERROR( "out of dynamic memory in asm_mips_scan_buffer()" );
 
-	b->yy_buf_size = (int) (size - 2);	/* "- 2" to take care of EOB's */
+	b->yy_buf_size = size - 2;	/* "- 2" to take care of EOB's */
 	b->yy_buf_pos = b->yy_ch_buf = base;
 	b->yy_is_our_buffer = 0;
-	b->yy_input_file = NULL;
+	b->yy_input_file = 0;
 	b->yy_n_chars = b->yy_buf_size;
 	b->yy_is_interactive = 0;
 	b->yy_at_bol = 1;
@@ -1917,10 +1855,10 @@ YY_BUFFER_STATE asm_mips_scan_buffer  (char * base, yy_size_t  size )
  * @note If you want to scan bytes that may contain NUL values, then use
  *       asm_mips_scan_bytes() instead.
  */
-YY_BUFFER_STATE asm_mips_scan_string (const char * yystr )
+YY_BUFFER_STATE asm_mips_scan_string (yyconst char * yystr )
 {
     
-	return asm_mips_scan_bytes(yystr,(int) strlen(yystr) );
+	return asm_mips_scan_bytes(yystr,strlen(yystr) );
 }
 
 /** Setup the input buffer state to scan the given bytes. The next call to asm_mipslex() will
@@ -1930,15 +1868,15 @@ YY_BUFFER_STATE asm_mips_scan_string (const char * yystr )
  * 
  * @return the newly allocated buffer state object.
  */
-YY_BUFFER_STATE asm_mips_scan_bytes  (const char * yybytes, int  _yybytes_len )
+YY_BUFFER_STATE asm_mips_scan_bytes  (yyconst char * yybytes, yy_size_t  _yybytes_len )
 {
 	YY_BUFFER_STATE b;
 	char *buf;
 	yy_size_t n;
-	int i;
+	yy_size_t i;
     
 	/* Get memory for full buffer, including space for trailing EOB's. */
-	n = (yy_size_t) (_yybytes_len + 2);
+	n = _yybytes_len + 2;
 	buf = (char *) asm_mipsalloc(n  );
 	if ( ! buf )
 		YY_FATAL_ERROR( "out of dynamic memory in asm_mips_scan_bytes()" );
@@ -1964,9 +1902,9 @@ YY_BUFFER_STATE asm_mips_scan_bytes  (const char * yybytes, int  _yybytes_len )
 #define YY_EXIT_FAILURE 2
 #endif
 
-static void yynoreturn yy_fatal_error (const char* msg )
+static void yy_fatal_error (yyconst char* msg )
 {
-			(void) fprintf( stderr, "%s\n", msg );
+    	(void) fprintf( stderr, "%s\n", msg );
 	exit( YY_EXIT_FAILURE );
 }
 
@@ -1994,7 +1932,7 @@ static void yynoreturn yy_fatal_error (const char* msg )
  */
 int asm_mipsget_lineno  (void)
 {
-    
+        
     return asm_mipslineno;
 }
 
@@ -2017,7 +1955,7 @@ FILE *asm_mipsget_out  (void)
 /** Get the length of the current token.
  * 
  */
-int asm_mipsget_leng  (void)
+yy_size_t asm_mipsget_leng  (void)
 {
         return asm_mipsleng;
 }
@@ -2032,29 +1970,29 @@ char *asm_mipsget_text  (void)
 }
 
 /** Set the current line number.
- * @param _line_number line number
+ * @param line_number
  * 
  */
-void asm_mipsset_lineno (int  _line_number )
+void asm_mipsset_lineno (int  line_number )
 {
     
-    asm_mipslineno = _line_number;
+    asm_mipslineno = line_number;
 }
 
 /** Set the input stream. This does not discard the current
  * input buffer.
- * @param _in_str A readable stream.
+ * @param in_str A readable stream.
  * 
  * @see asm_mips_switch_to_buffer
  */
-void asm_mipsset_in (FILE *  _in_str )
+void asm_mipsset_in (FILE *  in_str )
 {
-        asm_mipsin = _in_str ;
+        asm_mipsin = in_str ;
 }
 
-void asm_mipsset_out (FILE *  _out_str )
+void asm_mipsset_out (FILE *  out_str )
 {
-        asm_mipsout = _out_str ;
+        asm_mipsout = out_str ;
 }
 
 int asm_mipsget_debug  (void)
@@ -2062,9 +2000,9 @@ int asm_mipsget_debug  (void)
         return asm_mips_flex_debug;
 }
 
-void asm_mipsset_debug (int  _bdebug )
+void asm_mipsset_debug (int  bdebug )
 {
-        asm_mips_flex_debug = _bdebug ;
+        asm_mips_flex_debug = bdebug ;
 }
 
 static int yy_init_globals (void)
@@ -2073,10 +2011,10 @@ static int yy_init_globals (void)
      * This function is called from asm_mipslex_destroy(), so don't allocate here.
      */
 
-    (yy_buffer_stack) = NULL;
+    (yy_buffer_stack) = 0;
     (yy_buffer_stack_top) = 0;
     (yy_buffer_stack_max) = 0;
-    (yy_c_buf_p) = NULL;
+    (yy_c_buf_p) = (char *) 0;
     (yy_init) = 0;
     (yy_start) = 0;
 
@@ -2085,8 +2023,8 @@ static int yy_init_globals (void)
     asm_mipsin = stdin;
     asm_mipsout = stdout;
 #else
-    asm_mipsin = NULL;
-    asm_mipsout = NULL;
+    asm_mipsin = (FILE *) 0;
+    asm_mipsout = (FILE *) 0;
 #endif
 
     /* For future reference: Set errno on error, since we are called by
@@ -2122,19 +2060,18 @@ int asm_mipslex_destroy  (void)
  */
 
 #ifndef yytext_ptr
-static void yy_flex_strncpy (char* s1, const char * s2, int n )
+static void yy_flex_strncpy (char* s1, yyconst char * s2, int n )
 {
-		
-	int i;
+	register int i;
 	for ( i = 0; i < n; ++i )
 		s1[i] = s2[i];
 }
 #endif
 
 #ifdef YY_NEED_STRLEN
-static int yy_flex_strlen (const char * s )
+static int yy_flex_strlen (yyconst char * s )
 {
-	int n;
+	register int n;
 	for ( n = 0; s[n]; ++n )
 		;
 
@@ -2144,12 +2081,11 @@ static int yy_flex_strlen (const char * s )
 
 void *asm_mipsalloc (yy_size_t  size )
 {
-			return malloc(size);
+	return (void *) malloc( size );
 }
 
 void *asm_mipsrealloc  (void * ptr, yy_size_t  size )
 {
-		
 	/* The cast to (char *) in the following accommodates both
 	 * implementations that use char* generic pointers, and those
 	 * that use void* generic pointers.  It works with the latter
@@ -2157,26 +2093,27 @@ void *asm_mipsrealloc  (void * ptr, yy_size_t  size )
 	 * any pointer type to void*, and deal with argument conversions
 	 * as though doing an assignment.
 	 */
-	return realloc(ptr, size);
+	return (void *) realloc( (char *) ptr, size );
 }
 
 void asm_mipsfree (void * ptr )
 {
-			free( (char *) ptr );	/* see asm_mipsrealloc() for (char *) cast */
+	free( (char *) ptr );	/* see asm_mipsrealloc() for (char *) cast */
 }
 
 #define YYTABLES_NAME "yytables"
 
-#line 175 "src/parsing/asm_mips.lex"
+#line 174 "src/parsing/asm_mips.lex"
+
 
 
 /* ###--------------------------------------------------------------### */
-/* function	: yywrap						*/
+/* function	: asm_mipswrap						*/
 /* description	: return 1						*/
 /* called func.	: none							*/
 /* ###--------------------------------------------------------------### */
 
-int yywrap ()
+int asm_mipswrap ()
   {
   return (1);
   }
