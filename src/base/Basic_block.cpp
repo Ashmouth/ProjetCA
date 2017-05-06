@@ -519,7 +519,18 @@ void Basic_block::compute_def_liveout(){
 
   Instruction * inst = get_first_instruction();
 
-  /* A REMPLIR */
+  /* TODO: A REMPLIR */
+
+  for (int i = 0; i < get_nb_inst(); i++) {
+    Instruction * inst = get_instruction_at_index(i);
+    OPRegister* dst = inst->get_reg_dst();
+
+    if(dst != NULL) {
+      if (LiveOut[dst]) {
+        DefLiveOut[dst] = i;
+      }
+    }
+  }
 
 #ifdef DEBUG
   cout << "DEF LIVE OUT: " ;
@@ -543,7 +554,30 @@ void Basic_block::reg_rename(list<int> *frees){
   compute_def_liveout();
 
 
-  /* A REMPLIR */
+  /* TODO: A REMPLIR TO TEST*/
+   for (int i = 0; i < get_nb_inst(); i++) {
+
+     if (frees->empty()) {
+       break;
+    }
+
+    Instruction * inst = get_instruction_at_index(i);
+    OPRegister* src1 = inst->get_reg_src1();
+    OPRegister* src2 = inst->get_reg_src2();
+    OPRegister* dst = inst->get_reg_dst();
+
+    if(src1 != NULL && DefLiveOut[src1] == -1 && (Use[src1] || Def[src1])) {
+      src1->set_reg(frees->front());
+      frees->pop_front();
+    }
+    if(src2 != NULL && DefLiveOut[src2] == -1 && (Use[src2] || Def[src2])) {
+      src2->set_reg(frees->front());
+      frees->pop_front();
+    }
+    if(dst != NULL && DefLiveOut[dst] == -1 && (Use[dst] || Def[dst])) {
+      dst->set_reg(frees->front());
+      frees->pop_front();
+    }
 
 }
 
