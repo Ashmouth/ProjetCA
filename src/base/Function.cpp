@@ -164,67 +164,7 @@ void Function::add_BB(Line *debut, Line *fin, Line *br, int index) {
 // estime que tout label est utilis� par un saut et donc correspond bien � une
 // entete de BB).
 
-/*
-   void Function::comput_basic_block() {
-   Line *debut, *current, *prev;
-   bool verbose = true;
-   current = _head;
-   debut = NULL;
-   prev = NULL;
-   int ind = 0;
-   string str;
-   Line *l = NULL;
-   Instruction *i = NULL;
-   Line *b;
 
-   cout << "comput BB" << endl;
-   if (verbose) {
-   cout << "head :" << _head->get_content() << endl;
-   cout << "tail :" << _end->get_content() << endl;
-   }
-   if (BB_computed)
-   return; // NE PAS TOUCHER
-
-   while (current != _end) {
-
-   if(current->isLabel()) {
-   if (debut == NULL) {
-   debut = current;
-   } else {
-   add_BB(debut, current->get_prev(), NULL, ind);
-   debut = current;
-   ind++;
-   }
-   }
-   if(current->isInst()) {
-   if (debut == NULL) {
-   debut = current;
-   }
-   i = getInst(current);
-
-   if (i->is_branch()) {
-   add_BB(debut, current->get_next(), current, ind);
-   current = current->get_next();
-   debut = NULL;
-   ind++;
-   }
-   prev = current;
-   }
-   current = current->get_next();
-   }
-
-   if(debut != NULL) {
-   cout << "basic_block.debut != null" << endl;
-   add_BB(debut, prev, NULL, ind);
-   }
-
-   if (verbose)
-   cout << "end comput Basic Block" << endl;
-
-   BB_computed = true;
-   return;
-   }
-   */
 
 void Function::comput_basic_block(){
   Line *debut, *current, *prev;
@@ -256,7 +196,6 @@ void Function::comput_basic_block(){
       {
 
         add_BB(debut, current->get_prev(), NULL, ind);
-        cout << "label .................................................." << endl;
         debut = current;
         ind++;
 
@@ -344,62 +283,6 @@ list<Basic_block *>::iterator Function::bb_list_end() { return _myBB.end(); }
 /* le dernier bloc n'a pas de successeurs - celui qui se termine par jr R31 */
 /* les sauts indirects n'ont pas de successeur */
 
-/*
-   void Function::comput_succ_pred_BB() {
-
-   list<Basic_block *>::iterator it, it2;
-   Basic_block *current;
-   Instruction *instr;
-   Basic_block *succ = NULL;
-   Line *line = NULL;
-   if (BB_pred_succ)
-   return;
-
-// A REMPLIR TODO
-//for (it = bb_list_begin(); it != bb_list_end(); it++) {
-//current = *it;
-for (int index = 0; (current = get_BB(index)); index++) {
-cout << index << endl;
-
-line = current->get_branch();
-cout << "Pass line" << endl;
-
-if (line != NULL) {
-cout << line->to_string() << endl;
-instr = getInst(line);
-cout << "Pass getInst" << endl;
-
-//TODO: debug here
-if (instr->is_indirect_branch()) {
-// Add next block
-cout << "Pass startind" << endl;
-current->set_link_succ_pred(get_BB(index+1));
-cout << "Pass endind" << endl;
-}
-if (instr->is_call()) {
-// Add next block
-cout << "Pass startcall" << endl;
-current->set_link_succ_pred(get_BB(index+1));
-cout << "Pass endcall" << endl;
-
-} else if (instr->is_cond_branch()) {
-// Add branch block and rest
-cout << "Pass startbranch" << endl;
-succ = find_label_BB(instr->get_op_label());
-cout << "Pass find_label" << endl;
-current->set_link_succ_pred(succ);
-current->set_link_succ_pred(get_BB(index+1));
-cout << "Pass endbranch" << endl;
-}
-}
-cout << "Pass loop" << endl;
-}
-// ne pas toucher ci-dessous
-BB_pred_succ = true;
-return;
-}
-*/
-
 void Function::comput_succ_pred_BB() {
 
   list<Basic_block*>::iterator it, it2;
@@ -414,21 +297,20 @@ void Function::comput_succ_pred_BB() {
   //parcourir tous les blocs de base
   //for(it = bb_list_begin(); it != bb_list_end(); it++) {
   for (int index = 0; (current = get_BB(index)); index++) {
-    //current = *it;
-      
+
+
     // recupere la line qui contient le branchement
-cout << "LOOP ................................ " << endl;
     if(current->get_branch()) {
-      cout << "PASS ................................ " << endl;
+
       instr = getInst(current->get_branch());
       // recuperer le label de branchement si le branchement exist
       succ = get_BB(index+1);
-      //succ =  *it++;
+
 
 
       if(instr->is_call()) {
         // ajouter le predecesseur de succ
-        //succ = *it ++;
+
         succ = get_BB(index+1);
         current->set_link_succ_pred(succ);
 
@@ -438,24 +320,23 @@ cout << "LOOP ................................ " << endl;
         // rendre le bloc de base sur le quel cette function methode est appelée
 
         succ = find_label_BB(instr->get_op_label());
-        
-        
-        
+
+
+
         // si la condition est verifier ajouter le predecesseur de succ
         if(succ != NULL) {
           current->set_link_succ_pred(succ);
         }
         //sinon ajouter le bloc suivant
-        //succ = *it++;
+
         succ = get_BB(index+1);
         current->set_link_succ_pred(succ);
       }
-      
-      
-      
+
+
+
     // si y a pas de branchement, ajouter le bloc suivant
     } else if (get_BB(index+1)) {
-    cout << "ENTER ................................ " << endl;
         current->set_link_succ_pred(get_BB(index+1));
     }
   }
@@ -468,10 +349,10 @@ cout << "LOOP ................................ " << endl;
 vector<bool> intersection(vector<bool> &v1, vector<bool> &v2) {
   vector<bool> v3;
   for(int i = 0; i < v1.size(); i++) {
-    if(v1[i] && v2[i]) {
-      v3.push_back(false);
-    } else {
+    if(v1[i] || v2[i]) {
       v3.push_back(true);
+    } else {
+      v3.push_back(false);
     }
   }
   return v3;
@@ -489,66 +370,66 @@ void Function::compute_dom() {
   comput_succ_pred_BB();
 
   /* A REMPLIR */
+  vector<bool> N;
   vector<bool> setT;
   vector<bool> setD;
-  Basic_block *succ;
-  workinglist.push_back(*(_myBB.begin()));      /* init list BB */
+
+
+
+  for(int i = 0; i < _myBB.size(); i++)
+  {
+    N.push_back(false);
+  }
+
+  change = true;
+  current = *(_myBB.begin());
+  current->Domin = setD; /* traitement de la racine */
+
+  workinglist.push_back(current); /* initialisation liste des BB a traiter */
+
+  for(int i = 0; i < _myBB.size(); i++)
+  {
+    if(current != get_BB(i))
+    {
+      get_BB(i)->Domin = N;
+    }
+  }
 
   while (workinglist.size() != 0) {
     change = false;
     current = workinglist.front();
     workinglist.pop_front();
 
+   setT = N;
 
-    cout << "Comput_dom_PaSS.........................................." << endl;
-    setT = {};
-    int tmp = 0;
-    int index = 0;
-    int ibb = 0;
-    
-    for (int i = 0; i < size; i++) {  // TODO: check if T = N good
-      if (current == get_BB(ibb)) {
-        index = tmp;                  //Get index
-      }
-      bb = get_BB(ibb);
-      setT.push_back(false);
-      tmp++;
-      ibb++;
-    }
-    cout << current->get_nb_succ() << endl;
-    
-    //TOP OK
-    
+   for(int i = 0; i < current->get_nb_pred(); i++)
+   {
+     setT  = intersection(setT,current->get_predecessor(i)->Domin);
+   }
 
-    for (int i = 0; i < current->get_nb_pred(); i++) {
-      pred = bb->get_predecessor(i);
-      setT = intersection(setT, pred->Domin);
-    }
 
-    setD = setT;
-    setD[index] = true; //Add himself
+   setD = setT;
+   setD[current->get_index()] = true;
 
-    if (setD != current->Domin) {   //TODO CHECK INFINITE LOOP
-      cout << "Comput_dom_POUET.........................................." << endl;
-      current->Domin = setD;
-      change = true;
-    }
+   if(setD != current->Domin)
+   {
+     current->Domin = setD;
+     change = true;
+   }
 
-    if (change) {
-      for (int i = 0; i < current->get_nb_succ(); i++) {
-        succ = current->get_successor1();
-        //cout << succ->get_content() << endl;
-        if(succ) {
-        cout << "Comput_dom_Succ.........................................." << endl;
-          workinglist.push_back(succ);
-        }
-        succ = current->get_successor2();
-        if(succ) {
-        cout << "Comput_dom_Succ2.........................................." << endl;
-          workinglist.push_back(succ);
-        }
-      }
-    }
+   if(change == true)
+   {
+     for(int i = 0; i < current->get_nb_succ(); i++)
+     {
+        workinglist.push_back(current->get_successor1());
+
+        if(current->get_successor2())
+        workinglist.push_back(current->get_successor2());
+
+
+     }
+   }
+
   }
 
   // affichage du resultat
@@ -583,36 +464,46 @@ void Function::compute_live_var() {
    * est donc vivant), le registre pointeur de pile ($29) est aussi vivant !
    */
 
-  //TODO: Do a loop in a bb and add $2 and $29
-  /*
-     it = _myBB.end();
-     for(int i = size; i > 0; i--) {
-     bb = *it;
-  //LiveOut(bb) = U LiveIn(bb')
-  if(i < size) {
-  for(int j = 0; j < bb->get_nb_pred(); j++) {
-  pred = bb->get_predecessor(j);
-  for(int k = 0; k < NB_REG; k++) {
-  bb->LiveOut[j] = LiveIn[j];
-  }
-  }
+  it = _myBB.begin();
+  for (int i = 0; i < size; i++) {
+    bb = *it;
+    if (bb->get_nb_succ == 0) {
+      list.push_back(bb);
+    }
+    // Check if indirect jump ?
+    bb.LiveOut[2] = true;
+    bb.LiveOut[29] = true;
+    it++;
   }
 
-  //LiveIn(bb) = use(bb) U (LiveOut(bb)\def(bb))
-  for(int j = 0; j < NB_REG; j++) {
-  boolean tmp = true;
-  if(bb->LiveOut[j] == bb->DEF[j]) {
-  tmp = false;
-  }
-  bb->LiveIn[j] = (bb->Use[j] || tmp);
-  }
+  while (!list.empty()) {
+    bb = list.front();
+    list.pop_front();
 
-  //$i dead if LiveIn/Out(bb)
-  //$i dead if LiveIn/Out(bb) but in bb
+      // LiveOut(bb) = U LiveIn(bb')
+      if (i < size) {
+        for (int j = 0; j < bb->get_nb_pred(); j++) {
+          pred = bb->get_predecessor(j);
+          for (int k = 0; k < NB_REG; k++) {
+            bb->LiveOut[j] = LiveIn[j];
+          }
+        }
+      }
 
-  it--;
+      // LiveIn(bb) = use(bb) U (LiveOut(bb)\def(bb))
+      for (int j = 0; j < NB_REG; j++) {
+        boolean tmp = true;
+        if (bb->LiveOut[j] == bb->DEF[j]) {
+          tmp = false;
+        }
+        bb->LiveIn[j] = (bb->Use[j] || tmp);
+      }
+
+      //$i dead if LiveIn/Out(bb)
+      //$i dead if LiveIn/Out(bb) but in bb
+
+    }
   }
-  */
 
 
   // Affichage du resultat
