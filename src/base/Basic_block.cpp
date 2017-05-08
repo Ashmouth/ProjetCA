@@ -444,7 +444,9 @@ void Basic_block::compute_use_def(void) {
     if (use_def_done)
         return;
 
+    cout << ">> USEDEF Begin" << endl;
     /* TODO: A REMPLIR */
+
     for (int i = 0; i < get_nb_inst(); i++) {
         Instruction *inst = get_instruction_at_index(i);
         OPRegister *src1 = inst->get_reg_src1();
@@ -452,6 +454,8 @@ void Basic_block::compute_use_def(void) {
         OPRegister *dst = inst->get_reg_dst();
 
         if (src1 != NULL && Def[src1->get_reg()] == false) {
+
+        cout << ">> USE PASS" << endl;
             Use[src1->get_reg()] = true;
         }
 
@@ -465,12 +469,10 @@ void Basic_block::compute_use_def(void) {
 
         if (inst->is_call()) {
             Def[31] = true;
-            Def[2] = true;
-            Use[4] = true;
-            Use[5] = true;
-            Use[6] = true;
         }
     }
+    cout << ">> USEDEF end" << endl;
+
 
 #ifdef DEBUG
     cout << "****** BB " << get_index() << "************" << endl;

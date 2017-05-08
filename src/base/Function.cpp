@@ -464,6 +464,29 @@ void Function::compute_live_var() {
      * est donc vivant), le registre pointeur de pile ($29) est aussi vivant !
      */
 
+    // Affichage du resultat
+    it2 = _myBB.begin();
+    for (int j = 0; j < size; j++) {
+        bb = *it2;
+        cout << "********* bb " << bb->get_index() << "***********" << endl;
+        cout << "USE : ";
+        for (int i = 0; i < NB_REG; i++) {
+            if (bb->Use[i]) {
+                cout << "$" << i << " ";
+            }
+        }
+        cout << endl;
+        cout << "DEF :  ";
+        for (int i = 0; i < NB_REG; i++) {
+            if (bb->Def[i]) {
+                cout << "$" << i << " ";
+            }
+        }
+        cout << endl;
+        it2++;
+    }
+
+
     it = _myBB.begin();
     for (int i = 0; i < size; i++) {
         bb = *it;
@@ -481,27 +504,62 @@ void Function::compute_live_var() {
         workinglist.pop_front();
 
         // LiveOut(bb) = U LiveIn(bb')
+        /*
         for (int i = 0; j < bb->get_nb_pred(); i++) {
             pred = bb->get_predecessor(i);
             for (int j = 0; j < NB_REG; j++) {
+              if(pred->LiveIn[j]) {
                 bb->LiveOut[j] = pred->LiveIn[j];
+              }
             }
         }
+        */
+          Basic_block* succ = bb->get_successor1();
+          if(succ) {
+            for (int j = 0; j < NB_REG; j++) {
+              if(pred->LiveIn[j]) {
+                bb->LiveOut[j] = succ->LiveIn[j];
+              }
+            }
+          }
 
+          succ = bb->get_successor2();
+          if(succ) {
+            for (int j = 0; j < NB_REG; j++) {
+              if(pred->LiveIn[j]) {
+                bb->LiveOut[j] = succ->LiveIn[j];
+              }
+            }
+          }
+
+
+        change = false;
         // LiveIn(bb) = use(bb) U (LiveOut(bb)\def(bb))
         for (int j = 0; j < NB_REG; j++) {
             bool tmp = true;
             if (bb->LiveOut[j] == bb->Def[j]) {
                 tmp = false;
             }
+            if(!bb->LiveIn[j]) {
             if (bb->Use[j] || tmp) {
                 bb->LiveIn[j] = true;
+                change = true;
+                cout << ">> PASS" << endl;
+            }
             }
         }
+
+        if(change) {
+          for (int i = 0; i < bb->get_nb_pred(); i++) {
+            workinglist.push_back(bb->get_predecessor(i));
+          }
+        }
+
 
         //$i dead if LiveIn/Out(bb)
         //$i dead if LiveIn/Out(bb) but in bb
 
+        //cout << ">> Compute_live_var PASS" << endl;
     }
 
 
