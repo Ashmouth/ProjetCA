@@ -381,12 +381,8 @@ void Basic_block::reset_pred_succ_dep() {
   return;
 }
 
-/* calcul le nb de cycles pour executer le BB, on suppose qu'une instruction
- * peut sortir du pipeline � chaque cycle, il faut trouver les cycles de gel
- * induit par les d�pendances */
 
 int Basic_block::nb_cycles() {
-
   Instruction *ic = get_first_instruction();
 
   /* tableau ci-dessous utile pour savoir pour chaque instruction quand elle
@@ -394,41 +390,49 @@ int Basic_block::nb_cycles() {
    * qui en d�pendent, initialisation � -1  */
 
   vector<int> inst_cycle(get_nb_inst());
+
   for (int i = 0; i < get_nb_inst(); i++) {
     inst_cycle[i] = -1;
   }
+
   comput_pred_succ_dep();
 
   /* TODO: A REMPLIR */
+
   Instruction *current;
   list<dep *>::iterator it;
   dep *tmp;
-  cout << ">> Begin cycle " << endl;
-  for (int i = 0; i < get_nb_inst(); i++) {
-    cout << ">> Begin cycle " << i << " sur " << get_nb_inst() << endl;
-    current = get_instruction_at_index(i);
 
-    if (i = !0) {
-      inst_cycle[i] =
-        std::max(inst_cycle[i], (inst_cycle[i - 1] + current->get_latency()));
+  //cout << ">> Begin cycle " << endl;
+
+  current = get_first_instruction();
+  int index = current->get_index();
+  inst_cycle[0] = current->get_latency();
+
+  for (int i = 0; i < get_nb_inst(); i++) {
+    if (i != 0) {
+      int cycle = inst_cycle[i - 1] + current->get_latency();
+      inst_cycle[i] = std::max(inst_cycle[i], cycle);
     }
 
     it = current->succ_begin();
     for (int j = 0; j < current->get_nb_succ(); j++) {
-    cout << ">>>> Pass cycle " << j << " sur " << current->get_nb_succ() << endl;
       tmp = *it;
+
       if (tmp->type == RAW) {
-        int cycle =
-          inst_cycle[i] + delai(current->get_type(), tmp->inst->get_type());
-        inst_cycle[i] = std::max(inst_cycle[i], cycle);
+        int id = tmp->inst->get_index()- index;
+        int cycle = inst_cycle[i] + delai(current->get_type(), tmp->inst->get_type());
+        inst_cycle[id] = std::max(inst_cycle[id], cycle);
       }
-      it++;
+      ++it;
     }
-  cout << ">> End cycle " << endl;
+
+    current = current->get_next();
   }
 
-  return 0;
+  return inst_cycle[get_nb_inst() - 1];
 }
+
 
 /*
    calcule DEF et USE pour l'analyse de registre vivant
@@ -448,7 +452,7 @@ void Basic_block::compute_use_def(void) {
   if (use_def_done)
     return;
 
-  cout << ">> USEDEF Begin" << endl;
+  //cout << ">> USEDEF Begin" << endl;
   /* TODO: A REMPLIR */
 
   for (int i = 0; i < get_nb_inst(); i++) {
@@ -459,7 +463,7 @@ void Basic_block::compute_use_def(void) {
 
     if (src1 != NULL && Def[src1->get_reg()] == false) {
 
-      cout << ">> USE PASS" << endl;
+      //cout << ">> USE PASS" << endl;
       Use[src1->get_reg()] = true;
     }
 
@@ -475,7 +479,7 @@ void Basic_block::compute_use_def(void) {
       Def[31] = true;
     }
   }
-  cout << ">> USEDEF end" << endl;
+  //cout << ">> USEDEF end" << endl;
 
 
 #ifdef DEBUG
@@ -606,11 +610,11 @@ void Basic_block::reg_rename() {
   /*TODO:  A REMPLIR */
   //cout << ">> Begin Rename " << endl;
   for (int i = 0; i < NB_REG; i++) {
-    cout << ">>>> PASS " << endl;
+    //cout << ">>>> PASS " << endl;
     if (LiveIn[i] == false && Def[i] == false) {
-      cout << ">>>>>> ADD $" << i << endl;
+      //cout << ">>>>>> ADD $" << i << endl;
       frees.push_front(i);
-      cout << ">>>>>> PushDone" << i << endl;
+      //cout << ">>>>>> PushDone" << i << endl;
     }
   }
   //cout << "Call Reg_Rename " << endl;
