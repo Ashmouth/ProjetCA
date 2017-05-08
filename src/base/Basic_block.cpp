@@ -399,11 +399,13 @@ int Basic_block::nb_cycles() {
   }
   comput_pred_succ_dep();
 
-  /* A REMPLIR */
+  /* TODO: A REMPLIR */
   Instruction *current;
   list<dep *>::iterator it;
   dep *tmp;
+  cout << ">> Begin cycle " << endl;
   for (int i = 0; i < get_nb_inst(); i++) {
+    cout << ">> Begin cycle " << i << " sur " << get_nb_inst() << endl;
     current = get_instruction_at_index(i);
 
     if (i = !0) {
@@ -413,6 +415,7 @@ int Basic_block::nb_cycles() {
 
     it = current->succ_begin();
     for (int j = 0; j < current->get_nb_succ(); j++) {
+    cout << ">>>> Pass cycle " << j << " sur " << current->get_nb_succ() << endl;
       tmp = *it;
       if (tmp->type == RAW) {
         int cycle =
@@ -421,6 +424,7 @@ int Basic_block::nb_cycles() {
       }
       it++;
     }
+  cout << ">> End cycle " << endl;
   }
 
   return 0;
@@ -528,33 +532,6 @@ void Basic_block::compute_def_liveout() {
 }
 
 
-void Basic_block::renamer(int name, int newname) {
-  for (int i = 0; i < get_nb_inst(); i++) {
-    Instruction *inst = get_instruction_at_index(i);
-    OPRegister *src1 = inst->get_reg_src1();
-    OPRegister *src2 = inst->get_reg_src2();
-    OPRegister *dst = inst->get_reg_dst();
-
-    if (src1 != NULL) {
-      int isrc1 = src1->get_reg();
-      if (isrc1 == name) {
-        src1->set_reg(newname);
-      }
-    }
-    if (src2 != NULL) {
-      int isrc2 = src2->get_reg();
-      if (isrc2 == name) {
-        src2->set_reg(newname);
-      }
-    }
-    if (dst != NULL) {
-      int idst = dst->get_reg();
-      if (idst == name) {
-        dst->set_reg(newname);
-      }
-    }
-  }
-}
 
 /**** renomme les registres renommables : ceux qui sont d�finis et utilis�s dans
   le bloc et dont la d�finition n'est pas vivante en sortie
@@ -567,7 +544,7 @@ void Basic_block::reg_rename(list<int> *frees) {
   compute_def_liveout();
 
   /* TODO: A REMPLIR TO TEST*/
-  cout << ">> Begin REG_Rename " << endl;
+  //cout << ">> Begin REG_Rename " << endl;
   for (int i = 0; i < get_nb_inst(); i++) {
 
     if (frees->empty()) {
@@ -575,38 +552,45 @@ void Basic_block::reg_rename(list<int> *frees) {
     }
 
     Instruction *inst = get_instruction_at_index(i);
-
-    OPRegister *src1 = inst->get_reg_src1();
-    if (src1 != NULL) {
-      int isrc1 = src1->get_reg();
-      if (DefLiveOut[isrc1] == -1 && (Use[isrc1] || Def[isrc1])) {
-        int newname = frees->front();
-        renamer(isrc1, newname);
-        frees->pop_front();
-      }
-    }
-
-    OPRegister *src2 = inst->get_reg_src2();
-    if (src2 != NULL) {
-      int isrc2 = src2->get_reg();
-      if (DefLiveOut[isrc2] == -1 && (Use[isrc2] || Def[isrc2])) {
-        int newname = frees->front();
-        renamer(isrc2, newname);
-        frees->pop_front();
-      }
-    }
-
     OPRegister *dst = inst->get_reg_dst();
     if (dst != NULL) {
-      int idst = dst->get_reg();
-      if (DefLiveOut[idst] == -1 && (Use[idst] || Def[idst])) {
+      int name = dst->get_reg();
+
+      if (DefLiveOut[name] == -1 && (Use[name] || Def[name])) {
         int newname = frees->front();
-        renamer(idst, newname);
+
+        for (int j = 0; j < get_nb_inst(); j++) {
+          Instruction *inst = get_instruction_at_index(j);
+          OPRegister *src1 = inst->get_reg_src1();
+          OPRegister *src2 = inst->get_reg_src2();
+          OPRegister *dst = inst->get_reg_dst();
+
+          if (src1 != NULL) {
+            int isrc1 = src1->get_reg();
+            if (isrc1 == name) {
+              src1->set_reg(newname);
+            }
+          }
+          if (src2 != NULL) {
+            int isrc2 = src2->get_reg();
+            if (isrc2 == name) {
+              src2->set_reg(newname);
+            }
+          }
+          if (dst != NULL) {
+            int idst = dst->get_reg();
+            if (idst == name) {
+              dst->set_reg(newname);
+            }
+          }
+        }
+
+
         frees->pop_front();
       }
     }
   }
-  cout << ">> End REG_Rename " << endl;
+  //cout << ">> End REG_Rename " << endl;
 }
 
 /**** renomme les registres renommables : ceux qui sont d�finis et utilis�s dans
@@ -620,7 +604,7 @@ void Basic_block::reg_rename() {
   list<int> frees;
 
   /*TODO:  A REMPLIR */
-  cout << ">> Begin Rename " << endl;
+  //cout << ">> Begin Rename " << endl;
   for (int i = 0; i < NB_REG; i++) {
     cout << ">>>> PASS " << endl;
     if (LiveIn[i] == false && Def[i] == false) {
@@ -629,9 +613,9 @@ void Basic_block::reg_rename() {
       cout << ">>>>>> PushDone" << i << endl;
     }
   }
-  cout << "Call Reg_Rename " << endl;
+  //cout << "Call Reg_Rename " << endl;
   reg_rename(&frees);
-  cout << "End Rename " << endl;
+  //cout << "End Rename " << endl;
 }
 
 void Basic_block::apply_scheduling(list<Node_dfg *> *new_order) {
